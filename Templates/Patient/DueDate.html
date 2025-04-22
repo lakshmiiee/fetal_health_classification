@@ -1,0 +1,14 @@
+{% extends './ViewArticles.html' %}
+{% load static %}
+{% block due_date %}
+    <section class="department_section layout_padding pb-0" id="services">
+        <div class="department_container">
+            <div class="container ">
+                <div class="heading_container heading_center">
+                    <h2>Your due date : {{ due_date|date:"d, M Y" }}</h2>
+                    <h2>Week of Pregnancy : {{ week }}</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

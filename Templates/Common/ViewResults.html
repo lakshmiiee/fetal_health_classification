@@ -1,0 +1,44 @@
+{% extends './Home.html' %}
+{% load static %}
+{% block content %}
+    {% block menu %}
+        {{ block.super }}
+    {% endblock %}
+
+    <section class="department_section layout_padding" id="services">
+        <div class="department_container">
+            <div class="container ">
+                <div class="heading_container heading_center">
+                    <h2>Results</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% for result in results %}
+        <section class="about_section layout_margin-bottom" id="about">
+            <div class="container  ">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <div class="detail-box">
+                            <div class="heading_container">
+                                <h2>{{ result.2 }}</h2>
+                            </div>
+                            <p class="text-justify">{{ result.5 }}</p>
+                            <a href="{% get_media_prefix %}results/{{ result.4 }}" class="btn btn-sm btn-success">Download</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% empty %}
+        <section class="about_section layout_margin-bottom" id="about">
+            <div class="container  ">
+                <div class="row">
+                    <p class="text-center w-100">No Reports to Show</p>
+                </div>
+            </div>
+        </section>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,403 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <!-- Basic -->
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <!-- Mobile Metas -->
+        <meta name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <!-- Site Metas -->
+        <meta name="keywords" content />
+        <meta name="description" content />
+        <meta name="author" content />
+        <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type>
+
+        <title>LittlePulse</title>
+
+        <!-- bootstrap core css -->
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
+
+        <!-- fonts style -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap"
+            rel="stylesheet">
+
+        <!--owl slider stylesheet -->
+        <link rel="stylesheet" type="text/css"
+            href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+        <!-- font awesome style -->
+        <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
+
+        <!-- Custom styles for this template -->
+        <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+        <!-- responsive style -->
+        <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+
+    </head>
+
+    <body>
+        {% with utype=request.session.utype %}
+            
+            {% block content %}
+
+                <div class="hero_area">
+
+                    <div class="hero_bg_box">
+                        <img src="{% static 'images/hero-bg.png' %}" alt>
+                    </div>
+
+                    <!-- header section strats -->
+                    {% block menu %}
+                        <header class="header_section" {% if request.path == "/" %}id="home-head"{% endif %}>
+                            <div class="container">
+                                <nav class="navbar navbar-expand-lg custom_nav-container ">
+                                    <a class="navbar-brand" href="{% url 'home' %}">
+                                        <span>LittlePulse</span>
+                                    </a>
+
+                                    <button class="navbar-toggler" type="button"
+                                        data-toggle="collapse"
+                                        data-target="#navbarSupportedContent"
+                                        aria-controls="navbarSupportedContent"
+                                        aria-expanded="false"
+                                        aria-label="Toggle navigation">
+                                        <span class> </span>
+                                    </button>
+
+                                    <div class="collapse navbar-collapse"
+                                        id="navbarSupportedContent">
+                                        <ul class="navbar-nav">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{% url 'home' %}">Home</a>
+                                            </li>
+                                            {% if utype %}
+                                                {% if utype == "admin" %}
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{% url 'add_entity' role="hospital" %}">Add Hospital</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{% url 'view_entities' entity="hospital" %}">View Hospitals</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{% url 'add_article' %}">Add Article</a>
+                                                    </li>
+
+                                                {% elif utype == "hospital" %}
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{% url 'add_entity' role="doctor" %}">Add Doctor</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" 
+                                                            href="{% url 'view_entities' entity="doctor" hospital=request.session.username %}">View Doctors</a>
+                                                    </li>
+
+                                                {% elif utype == "doctor" %}
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{% url 'manage_schedule' %}">Manage Schedule</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{% url 'add_entity' role='patient' %}">Add Patient</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{% url 'view_patients' %}">View Patients</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{% url 'view_appointments' %}">View Appointments</a>
+                                                    </li>
+
+                                                {% else %}
+                                                    <li class="nav-item dropdown">
+                                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            Upload
+                                                        </a>
+                                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                            <li><a class="dropdown-item" href="{% url 'upload_result' %}">Result</a></li>
+                                                            <li><a class="dropdown-item" href="{% url 'add_report' %}">Report</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="nav-item dropdown">
+                                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            View
+                                                        </a>
+                                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                            <li><a class="dropdown-item" href="{% url 'view_entities' entity='hospital' %}">Hospitals</a></li>
+                                                            <li><a class="dropdown-item" href="{% url 'view_articles' %}">Articles</a></li>
+                                                            <li><a class="dropdown-item" href="{% url 'view_reports' %}">Reports</a></li>
+                                                            <li><a class="dropdown-item" href="{% url 'view_results' %}">Results</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{% url 'due_date' %}">Due Date</a>
+                                                    </li>
+
+                                                {% endif %}
+                                                     
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                                                </li>
+
+                                                {% else %}
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{% url 'add_entity' role='patient' %}">Register</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                                                    </li>
+
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </nav>
+                            </div>
+                        </header>
+                    {% endblock %}
+                    <!-- end header section -->
+
+                    <!-- slider section -->
+                    <section class="slider_section ">
+                        <div id="customCarousel1" class="carousel slide"
+                            data-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div class="container ">
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <div class="detail-box">
+                                                    <h1>Intelligent Health Monitoring For Your Little One</h1>
+                                                    <p>Advanced fetal health predictions for every expecting parent.</p>
+                                                    <div class="btn-box">
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </section>
+                    <!-- end slider section -->
+                </div>
+
+                <!-- department section -->
+                
+                <section class="department_section layout_padding" id="services">
+                    <div class="department_container">
+                        <div class="container ">
+                            <div class="heading_container heading_center">
+                                <h2>We Provide</h2>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="box ">
+                                        <div class="img-box">
+                                            <img src="{% static 'images/s1.png' %}" alt>
+                                        </div>
+                                        <div class="detail-box">
+                                            <h5>Real-Time Health Monitoring</h5>
+                                            <p>Track fetal health status with instant AI-powered assessments.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="box ">
+                                        <div class="img-box">
+                                            <img src="{% static 'images/s2.png' %}" alt>
+                                        </div>
+                                        <div class="detail-box">
+                                            <h5>Personalized Health Reports</h5>
+                                            <p>Receive detailed, easy-to-understand reports on fetal health status.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="box ">
+                                        <div class="img-box">
+                                            <img src="{% static 'images/s3.png' %}" alt>
+                                        </div>
+                                        <div class="detail-box">
+                                            <h5>User-Friendly Dashboard</h5>
+                                            <p>Easily access and understand fetal health data with a simple interface.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="box ">
+                                        <div class="img-box">
+                                            <img src="{% static 'images/s4.png' %}" alt>
+                                        </div>
+                                        <div class="detail-box">
+                                            <h5>24/7 Online Access & Support</h5>
+                                            <p>Check results anytime and get expert guidance for a stress-free pregnancy.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn-box">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- end department section -->
+
+                <!-- about section -->
+
+                <section class="about_section layout_margin-bottom" id="about">
+                    <div class="container  ">
+                        <div class="row">
+                            <div class="col-md-6 ">
+                                <div class="img-box">
+                                    <img src="{% static 'images/about-img.jpg' %}" alt>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-box">
+                                    <div class="heading_container">
+                                        <h2>
+                                            About <span>Us</span>
+                                        </h2>
+                                    </div>
+                                    <p class="text-justify">At LittlePulse, we are committed to ensuring a healthier 
+                                        future for both mothers and babies through the power of artificial intelligence. 
+                                        Our advanced machine learning models analyze fetal health data to provide accurate 
+                                        predictions, early risk detection, and personalized insights.</p>
+                                    <p class="text-justify">We believe that every pregnancy journey should be informed, 
+                                        stress-free, and supported by the best technology. Our platform empowers expecting 
+                                        parents and healthcare professionals with AI-driven reports, ensuring timely interventions 
+                                        and better health outcomes.</p>
+                                    <p class="text-justify">Join us in revolutionizing prenatal care with innovation, accuracy, 
+                                        and care at the core of what we do.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- end about section -->
+
+            {% endblock %}
+
+            <!-- footer section -->
+            <footer class="footer_section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-3 footer_col">
+                            <div class="footer_contact">
+                                <h4>
+                                    Reach at..
+                                </h4>
+                                <div class="contact_link_box">
+                                    <a href>
+                                        <i class="fa fa-map-marker"
+                                            aria-hidden="true"></i>
+                                        <span>TVM, Kerala, 695001</span>
+                                    </a>
+                                    <a href>
+                                        <i class="fa fa-phone"
+                                            aria-hidden="true"></i>
+                                        <span>Call +91 9999999999</span>
+                                    </a>
+                                    <a href>
+                                        <i class="fa fa-envelope"
+                                            aria-hidden="true"></i>
+                                        <span>
+                                            demo@gmail.com
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="footer_social">
+                                <a href>
+                                    <i class="fa fa-facebook"
+                                        aria-hidden="true"></i>
+                                </a>
+                                <a href>
+                                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                                </a>
+                                <a href>
+                                    <i class="fa fa-linkedin"
+                                        aria-hidden="true"></i>
+                                </a>
+                                <a href>
+                                    <i class="fa fa-instagram"
+                                        aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 footer_col">
+                            <div class="footer_detail">
+                                <h4>About</h4>
+                                <p>Join us in revolutionizing prenatal care with innovation, accuracy, 
+                                    and care at the core of what we do.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-2 mx-auto footer_col">
+                            <div class="footer_link_box">
+                                <h4>Links</h4>
+                                <div class="footer_links">
+                                    <a href="{% url 'home' %}">Home</a>
+                                    <a href="{% url 'home' %}#services">Services</a>
+                                    <a href="{% url 'home' %}#about">About</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 footer_col ">
+                            <h4>
+                                Newsletter
+                            </h4>
+                            <form action="#">
+                                <input type="email" placeholder="Enter email" />
+                                <button type="submit">
+                                    Subscribe
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="footer-info">
+                        <p>
+                            &copy; <span id="displayYear"></span> All Rights
+                            Reserved By
+                            <a href="https://html.design/">Free Html
+                                Templates<br><br></a>
+                            &copy; <span id="displayYear"></span> Distributed By
+                            <a href="https://themewagon.com/">ThemeWagon</a>
+                        </p>
+
+                    </div>
+                </div>
+            </footer>
+            <!-- footer section -->
+
+            <!-- jQery -->
+            <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+            <!-- popper js -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+                integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+                crossorigin="anonymous">
+            </script>
+            <!-- bootstrap js -->
+            <script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+            <!-- owl slider -->
+            <script type="text/javascript"
+                src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+            </script>
+            <!-- custom js -->
+            <script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+            <script type="text/javascript" src="{% static 'js/LittlePulse.js' %}"></script>
+            <!-- Google Map -->
+            <script
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
+            </script>
+            <!-- End Google Map -->
+
+        {% endwith %}
+    </body>
+
+</html>

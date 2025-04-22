@@ -1,0 +1,42 @@
+{% extends '../Common/Home.html' %}
+{% load static %}
+{% block content %}
+    {% block menu %}
+        {{ block.super }}
+    {% endblock %}
+    {% block due_date %}{% endblock %}
+
+    <section class="department_section layout_padding pb-5" id="services">
+        <div class="department_container">
+            <div class="container ">
+                <div class="heading_container heading_center">
+                    <h2>Articles</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% for article in articles %}
+        <section class="about_section layout_margin-bottom" id="about">
+            <div class="container  ">
+                <div class="row">
+                    <div class="col-md-6 ">
+                        <div class="img-box">
+                            <img src="{% get_media_prefix %}articles/{{ article.2 }}" alt>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="detail-box">
+                            <div class="heading_container">
+                                <h2>{{ article.1 }}</h2>
+                            </div>
+                            <p class="text-justify">{{ article.4 }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% empty %}
+        <p class="w-100 text-center mb-5">No articles to show</p>
+    {% endfor %}
+{% endblock %}

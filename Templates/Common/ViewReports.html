@@ -1,0 +1,48 @@
+{% extends './Home.html' %}
+{% load static %}
+{% block content %}
+    {% block menu %}
+        {{ block.super }}
+    {% endblock %}
+
+    <section class="about_section layout_margin-bottom layout_margin-top">
+        <div class="container  ">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="detail-box">
+                        <div class="heading_container">
+                            <h2 class="w-100 text-center mb-5">Fetal Reports</h2>
+                        </div>
+                        <div class="table-wrap">
+                            <table class="table table-borderless table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Report</th>
+                                        <th>Date</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for report in reports %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>Reoprt {{ forloop.counter }}</td>
+                                            <td>{{ report.2 }}</td>
+                                            <td><a href="{% url 'view_report' id=report.0 %}"><i class="fa fa-info-circle" aria-hidden="true"></i></td>
+                                        </tr>
+                                    {% empty %}
+                                        <tr>
+                                            <td colspan="4" class="text-center">No Reports Yet</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

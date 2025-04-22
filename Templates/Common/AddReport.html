@@ -1,0 +1,143 @@
+{% extends './Home.html' %}
+{% block content %}
+    {% block menu %}
+        {{ block.super }}
+    {% endblock %}
+
+    <section class="contact_section layout_padding">
+        <div class="container">
+            <div class="heading_container">
+                <h2 class="text-center w-100">Add Report</h2>
+                {% if success %}
+                    <p class="text-center w-100">Report Added</p>
+                {% endif %}
+            </div>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="form_container contact-form">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-row row">
+                                <div class="col-lg-6">
+                                    <div>
+                                        <input type="number" name="baseline_value" step="0.0001" placeholder="Baseline Value" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <input type="number" name="accelerations" step="0.0001" placeholder="Accelerations" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <input type="number" name="fetal_movement" step="0.0001" placeholder="Fetal Movement" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <input type="number" name="uterine_contractions" step="0.0001" placeholder="Uterine Contractions" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <input type="number" name="light_decelerations" step="0.0001" placeholder="Light Decelerations" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <input type="number" name="severe_decelerations" step="0.0001" placeholder="Severe Decelerations" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <input type="number" name="prolongued_decelerations" step="0.0001" placeholder="Prolongued Decelerations" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <input type="number" name="abnormal_short_term_variability" 
+                                            step="0.0001" placeholder="Abnormal Short Term Variability" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div>
+                                        <input type="number" name="mean_value_of_short_term_variability" 
+                                            step="0.0001" placeholder="Mean Value Of Short Term Variability" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div>
+                                        <input type="number" name="percentage_of_time_with_abnormal_long_term_variabilty" 
+                                            step="0.0001" placeholder="Percentage Of Time With Abnormal Long Term Variabilty" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <input type="number" name="mean_value_of_long_term_variability" 
+                                            step="0.0001" placeholder="Mean Value Of Long Term Variability" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <input type="number" name="histogram_width" step="0.0001" placeholder="Histogram Width" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <input type="number" name="histogram_min" step="0.0001" placeholder="Histogram Min" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <input type="number" name="histogram_max" step="0.0001" placeholder="Histogram Max" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <input type="number" name="histogram_number_of_peaks" 
+                                            step="0.0001" placeholder="Historam No. Of Peaks" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <input type="number" name="histogram_number_of_zeroes" 
+                                            step="0.0001" placeholder="Histogram No. Of Zeroes" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <input type="number" name="histogram_mode" step="0.0001" placeholder="Histogram Mode" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <input type="number" name="histogram_mean" step="0.0001" placeholder="Histogram Mean" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <input type="number" name="histogram_median" step="0.0001" placeholder="Histogram Median" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <input type="number" name="histogram_variance" step="0.0001" placeholder="Histogram Variance" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div>
+                                        <input type="number" name="histogram_tendency" step="0.0001" placeholder="Histogram Tendency" required/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn_box">
+                                <button type="submit">Upload</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

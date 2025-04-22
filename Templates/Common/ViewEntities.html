@@ -1,0 +1,57 @@
+{% extends '../Common/Home.html' %}
+{% load static %}
+{% block content %}
+    {% block menu %}
+        {{ block.super }}
+    {% endblock %}
+
+    {% with entity_type=request.resolver_match.kwargs.entity %}
+        <section class="doctor_section layout_padding">
+            <div class="container">
+                <div class="heading_container heading_center">
+                    <h2>{{ entity_type }}s</h2>
+                </div>
+                <div class="row">
+                    {% for entity in entities %}
+                        <div class="col-sm-6 col-lg-4">
+                            <div class="box">
+                                <div class="img-box">
+                                    <img src="{% get_media_prefix %}{{ entity_type }}s/{{ entity.2 }}" alt>
+                                </div>
+                                <div class="detail-box">
+                                    <div class="social_box">
+                                        {% if utype == "admin" and entity_type == "hospital" %}
+                                            <a href="{% url 'view_entities' entity='doctor' hospital=entity.3 %}" title="View Doctors">
+                                                <i class="fa fa-user-md" aria-hidden="true"></i>
+                                            </a>
+                                        {% elif utype == "hospital" %}
+                                            <a href="{% url 'view_patients' doctor=entity.3 %}" title="View Patients">
+                                                <i class="fa fa-user" aria-hidden="true"></i>
+                                            </a>
+                                        {% elif utype == "patient" %}
+                                            {% if entity_type == "hospital" %}
+                                                <a href="{% url 'view_entities' entity='doctor' hospital=entity.3 %}" title="View Doctors">
+                                                    <i class="fa fa-user-md" aria-hidden="true"></i>
+                                                </a>
+                                            {% else %}
+                                                <a href="{% url 'book_appointment' doctor=entity.3 %}" title="Book Appointment">
+                                                    <i class="fa fa-clipboard" aria-hidden="true"></i>
+                                                </a>
+                                            {% endif %}
+                                        {% else %}
+                                        {% endif %}
+                                    </div>
+                                    <h5>{{ entity.1 }}</h5>
+                                    <h6>{{ entity.4 }}</h6>
+                                    <h6>{{ entity.5 }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p class="text-center text-light w-100 mt-5">No {{ entity_type|capfirst }}s Added</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    {% endwith %}
+{% endblock %}

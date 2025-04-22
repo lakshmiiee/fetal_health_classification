@@ -1,0 +1,78 @@
+{% extends '../Common/Home.html' %}
+{% block content %}
+    {% block menu %}
+        {{ block.super }}
+    {% endblock %}
+
+    <section class="about_section layout_margin-bottom layout_margin-top">
+        <div class="container  ">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-12">
+                    <div class="detail-box">
+                        <div class="heading_container mb-4">
+                            <h2 class="w-100 text-center">Book A Slot</h2>
+                            {% if success is not None %}
+                                {% if success %}
+                                    <p class="w-100 text-center">Appointment Booked</p>
+                                {% else %}
+                                    <p class="w-100 text-center">You have already booked an appointment in this slot</p>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        {% if schedule %}
+                            <form method="post" id="appointment-form">
+                                {% csrf_token %}
+                                <div class="report-wrap schedule-table-wrap row">
+                                    <table class="table table-striped table-borderless" id="appointment-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Day</th>
+                                                <th>09:00 - 10:00</th>
+                                                <th>10:00 - 11:00</th>
+                                                <th>11:00 - 12:00</th>
+                                                <th>12:00 - 01:00</th>
+                                                <th>01:00 - 02:00</th>
+                                                <th>02:00 - 03:00</th>
+                                                <th>03:00 - 04:00</th>
+                                                <th>04:00 - 05:00</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for day, day_slots in slots.items %}
+                                                <tr>
+                                                    <td class="day">
+                                                        <p class="m-0 p-0">{{ day }}</p>
+                                                        <p class="m-0 p-0">{{ day|get_nearest_date }}</p>
+                                                    </td>
+                                                    {% for slot in day_slots %}
+                                                        <td class="{% if slot.3 %}vacant{% else %}full{% endif %}" 
+                                                            data-slot-id="{{ slot.0 }}" data-date="{{ day|get_nearest_date }}">
+                                                        </td>
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="btn-wrap">
+                                    <input type="hidden" class="form-control" name="slot_id">
+                                    <input type="hidden" class="form-control" name="date">
+                                    <input type="submit" class="btn btn-sm" value="Book Appointment">
+                                </div>
+                            </form>
+                        {% else %}
+                            <p class="w-100 text-center">Schedule not found</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="notification d-none">
+        <div class="notification-wrap">
+            <p class="message-content"></p>
+        </div>
+    </section>
+{% endblock %}

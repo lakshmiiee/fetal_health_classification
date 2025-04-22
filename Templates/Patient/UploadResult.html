@@ -1,0 +1,53 @@
+{% extends '../Common/Home.html' %}
+{% block content %}
+    {% block menu %}
+        {{ block.super }}
+    {% endblock %}
+    
+    <section class="contact_section layout_padding">
+        <div class="container">
+            <div class="heading_container">
+                <h2>Upload Result</h2>
+                {% if success %}
+                    <p>Result uploaded successfully</p>
+                {% endif %}
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form_container contact-form">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div>
+                                <input type="text" name="title" placeholder="Title" required/>
+                            </div>
+                            <div class="form-row row">
+                                <div class="col-lg-6">
+                                    <div>
+                                        <label for="date">Test Date</label>
+                                        <input type="date" name="date" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <label for="result">Test Result</label>
+                                        <input type="file" name="result" accept=".doc,.docx,.pdf,.txt,.odt,.rtf" required/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <textarea name="description" placeholder="Description" required></textarea>
+                            </div>
+                            <div class="btn_box">
+                                <button type="submit">Upload</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="map_container">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

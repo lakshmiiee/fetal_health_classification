@@ -1,0 +1,42 @@
+{% extends './Home.html' %}
+{% load static %}
+{% block content %}
+    {% block menu %}
+        {{ block.super }}
+    {% endblock %}
+
+    <section class="about_section layout_margin-bottom layout_margin-top">
+        <div class="container  ">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="detail-box">
+                        <div class="heading_container">
+                            <h2 class="w-100 text-center mb-5">Fetal Report: {{result}}</h2>
+                        </div>
+                        <div class="report-wrap table-wrap row">
+                            <table class="table table-striped table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Field</th>
+                                        <th>Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for key, value in report.items %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ key|format_string }}</td>
+                                            <td>{{ value }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

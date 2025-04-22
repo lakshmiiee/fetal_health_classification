@@ -1,0 +1,50 @@
+{% extends '../Common/Home.html' %}
+{% load static %}
+{% block content %}
+    {% block menu %}
+        {{ block.super }}
+    {% endblock %}
+    
+    <section class="doctor_section layout_padding">
+        <div class="container">
+            <div class="heading_container heading_center">
+                <h2>Appointments</h2>
+            </div>
+            <div class="select-wrap row">
+                <select name="date" class="form-control col-sm-3" id="filter-appointment">
+                    <option value="">Choose Date</option>
+                    {% for date in dates %}
+                        <option value="{{ date.0 }}">{{ date.0 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="row">
+                {% for appointment in appointments %}
+                    <div class="col-sm-6 col-lg-4 patient" data-date="{{ appointment.4 }}">
+                        <div class="box">
+                            <div class="img-box">
+                                <img src="{% get_media_prefix %}patients/{{ appointment.7 }}" alt>
+                            </div>
+                            <div class="detail-box">
+                                <div class="social_box">
+                                    <a href="{% url 'view_reports' patient_id=appointment.5 %}" title="View Fetal Reports">
+                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="{% url 'view_results' patient=appointment.8 %}" title="View Test Results">
+                                        <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                                <h5>{{ appointment.6 }}</h5>
+                                <h6>{{ appointment.9 }}</h6>
+                                <h6>{{ appointment.4 }}</h6>
+                                <h6>{{ appointment.13 }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-center text-light w-100 mt-5">No Appointments Scheduled</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends '../Common/Home.html' %}
+{% block content %}
+    {% block menu %}
+        {{ block.super }}
+    {% endblock %}
+
+    <section class="about_section layout_margin-bottom layout_margin-top">
+        <div class="container  ">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-12">
+                    <div class="detail-box">
+                        <div class="heading_container mb-4">
+                            <h2 class="w-100 text-center">Manage Schedule</h2>
+                            {% if success %}
+                                <p class="text-center w-100">Schedule Uploaded</p>
+                            {% endif %}
+                        </div>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="report-wrap schedule-table-wrap row">
+                                <table class="table table-striped table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th>Day</th>
+                                            <th>09:00 - 10:00</th>
+                                            <th>10:00 - 11:00</th>
+                                            <th>11:00 - 12:00</th>
+                                            <th>12:00 - 01:00</th>
+                                            <th>01:00 - 02:00</th>
+                                            <th>02:00 - 03:00</th>
+                                            <th>03:00 - 04:00</th>
+                                            <th>04:00 - 05:00</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for day, day_slots in slots.items %}
+                                            <tr>
+                                                <td>{{ day }}</td>
+                                                {% for slot in day_slots %}
+                                                    <td>
+                                                        <input type="number" class="form-control-sm" name="{{ slot.0 }}" 
+                                                            value="{{ slot.3|default_if_none:"" }}">
+                                                    </td>
+                                                {% endfor %}
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="btn-wrap">
+                                <input type="submit" class="btn btn-sm" value="Upload Schedule">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
